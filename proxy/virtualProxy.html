@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<script>
+    // 代理是一个对象，控制对另一个对象的访问，实现和另一个对象相同的接口。被控制的对象称为本体
+    /*
+     *  虚拟代理通常在有触发本体实例化的事件的时候才执行本体的实例化操作，并会保存本体实例化所需要的参数。
+     *  本体并不会立刻实例化
+     */
+    class Noumomen {
+        constructor (options) {
+            console.log('first instance');
+            this.options = options;
+        }
+        getOption () {
+            console.log(this.options);
+        }
+    }
+    class VirtualProxy {
+        constructor (options) {
+            console.log('proxy instace')
+            this.instance = null;
+            this._options = options;
+        }
+        _initial () {
+            if (this.instance === null) {
+                this.instance = new Noumomen(this._options);
+            }
+        }
+        getOption () {
+            console.log('first execute')
+            this._initial();
+            this.instance.getOption();
+        }
+    }
+    let p = new VirtualProxy('test');
+    p.getOption();
+</script>
+</body>
+</html>
