@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app"></div>
+    <div class="class"></div>
+    <input type="text">
+<script>
+    // 外观模式， 为复杂的系统提供一个更高级的统一接口,
+    // 在使用一些新的框架的时候，经常进行的二次开发
+    class Utils {
+        constructor () {
+            
+        }
+        query (selector) {
+            let elements;
+            if (selector.indexOf('.') === 0) {
+                elements = document.getElementsByClassName(selector.substring(1))
+            } else if (selector.indexOf('#') === 0) {
+                elements = document.getElementById(selector.substring(1))
+            } else {
+                elements = document.getElementsByTagName(selector);
+            }
+            return elements;
+        }
+        css (element, style) {
+            Object.keys(style).forEach(key => element.style[key] = style[key]);
+        }
+    }
+    let $ = new Utils();
+    $.query('#app');
+    $.query('.class');
+    $.css($.query('input')[0], {background: 'red'});
+</script>
+</body>
+</html>
